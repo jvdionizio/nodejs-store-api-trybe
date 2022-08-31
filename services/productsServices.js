@@ -15,8 +15,21 @@ const addProduct = async (name) => {
   return product;
 };
 
+// const updateProduct = async (id, name) => {
+//   const product = productsModel.updateProduct(id, name );
+//   return product;
+// };
+
+const deleteProduct = async (id) => {
+  const result = await productsModel.deleteProduct(id);
+
+  return result;
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
   addProduct,
+  // updateProduct,
+  deleteProduct,
 };

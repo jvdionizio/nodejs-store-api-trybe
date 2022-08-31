@@ -20,8 +20,8 @@ const addProduct = async (name) => {
     INSERT INTO StoreManager.products (name) VALUES (?);
   `;
 
-  const [products] = await connection.execute(SQL, [name]);
-  return { id: products.insertId, name };
+  const [product] = await connection.execute(SQL, [name]);
+  return { id: product.insertId, name };
 };
 
 // const updateProduct = async (id, name) => {

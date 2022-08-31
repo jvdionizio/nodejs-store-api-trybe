@@ -1,7 +1,7 @@
-const productsService = require('../services/productsServices');
+const productsServices = require('../services/productsServices');
 
 const getAllProducts = async (_req, res) => {
-  const products = await productsService.getAllProducts();
+  const products = await productsServices.getAllProducts();
 
   if (!products) return res.status(404).send({ message: 'Product not found' });
 
@@ -11,7 +11,7 @@ const getAllProducts = async (_req, res) => {
 const getProductById = async (req, res) => {
   const { id } = req.params;
 
-  const productById = await productsService.getProductById(id);
+  const productById = await productsServices.getProductById(id);
 
   if (!productById) { return res.status(404).send({ message: 'Product not found' }); }
 
@@ -21,7 +21,7 @@ const getProductById = async (req, res) => {
 const addProduct = async (req, res) => {
   const { name } = req.body;
 
-  const product = await productsService.addProduct(name);
+  const product = await productsServices.addProduct(name);
 
   if (!product) return res.status(404).send({ message: 'Product not found' });
 
@@ -47,11 +47,11 @@ const addProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
   const { id } = req.params;
 
-  const productById = await productsService.getProductById(id);
+  const productById = await productsServices.getProductById(id);
 
   if (!productById) return res.status(404).send({ message: 'Product not found' });
 
-   await productsService.deleteProduct(id);
+   await productsServices.deleteProduct(id);
 
   res.status(204).end();
 };

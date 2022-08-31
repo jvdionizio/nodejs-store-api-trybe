@@ -1,32 +1,35 @@
 const productsService = require('../services/productsServices');
 
-//                                                       (Requirement 02)
-const getAllProducts = async (_req, res, next) => {
-  try {
-    const product = await productsService.getAllProducts();
+const getAllProducts = async (_req, res) => {
+  const products = await productsService.getAllProducts();
 
-    if (!product) return res.status(404).send({ message: 'Product not found' });
+  if (!products) return res.status(404).send({ message: 'Product not found' });
 
-    res.status(200).send(product);
-  } catch (e) {
-    return next(e);
-  }
+  res.status(200).json(products);
 };
 
-const getProductById = async (req, res, next) => {
+const getProductById = async (req, res) => {
   const { id } = req.params;
-  try {
-    const productById = await productsService.getProductById(id);
 
-    if (!productById) { return res.status(404).send({ message: 'Product not found' }); }
+  const productById = await productsService.getProductById(id);
 
-    res.status(200).send(productById);
-  } catch (e) {
-    return next(e);
-  }
+  if (!productById) { return res.status(404).send({ message: 'Product not found' }); }
+
+  res.status(200).json(productById);
+};
+
+const addProduct = async (req, res) => {
+  const { name } = req.body;
+
+  const product = await productsService.addProduct(name);
+
+  if (!product) return res.status(404).send({ message: 'Product not found' });
+
+  res.status(201).json(product);
 };
 
 module.exports = {
   getAllProducts,
   getProductById,
+  addProduct,
 };

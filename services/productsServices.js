@@ -20,6 +20,11 @@ const addProduct = async (name) => {
 //   return product;
 // };
 
+const getProductByNameSearch = async (nameSearch) => {
+  const productList = await productsModel.getProductByNameSearch(nameSearch);
+  return productList;
+};
+
 const deleteProduct = async (id) => {
   const result = await productsModel.deleteProduct(id);
 
@@ -31,5 +36,6 @@ module.exports = {
   getProductById,
   addProduct,
   // updateProduct,
+  getProductByNameSearch,
   deleteProduct,
 };

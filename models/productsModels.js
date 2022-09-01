@@ -16,21 +16,27 @@ const getProductById = async (id) => {
 };
 
 const addProduct = async (name) => {
-  const SQL = `
-    INSERT INTO StoreManager.products (name) VALUES (?);
-  `;
+  const SQL = 'INSERT INTO StoreManager.products (name) VALUES (?);';
 
   const [product] = await connection.execute(SQL, [name]);
   return { id: product.insertId, name };
 };
 
-// const updateProduct = async (id, name) => {
+// const updateProduct = async (name, id) => {
 //   const SQL = 'UPDATE StoreManager.products SET name = ? WHERE id = ?;';
 
-//   await connection.execute(SQL, [name, id]);
+// const updateProduct = await connection.execute(SQL, [name, id]);
 
-//   return { id, name };
+//   return updateProduct;
 // };
+
+const getProductByNameSearch = async (nameSearch) => {
+  const SQL = 'SELECT * FROM StoreManager.products WHERE name LIKE ?;';
+
+  const [productsList] = await connection.execute(SQL, [`%${nameSearch}%`]);
+
+  return productsList;
+};
 
 const deleteProduct = async (id) => {
   const SQL = 'DELETE FROM StoreManager.products WHERE id = ?;';
@@ -45,5 +51,6 @@ module.exports = {
   getProductById,
   addProduct,
   // updateProduct,
+  getProductByNameSearch,
   deleteProduct,
 };

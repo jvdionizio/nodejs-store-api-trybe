@@ -31,52 +31,22 @@ describe('Products Controllers:', () => {
       it('Returns the products from database', async () => {
         const request = {};
         const response = {};
-
         response.status = sinon.stub().returns(response);
         response.json = sinon.stub();
-
         sinon.stub(productsService, 'getAllProducts').resolves(products);
-
         await productsControllers.getAllProducts(request, response);
-
         expect(response.json.calledWith(products)).to.be.equal(true);
       });
-
       it('Returns the status code 200 OK', async () => {
         const request = {};
         const response = {};
-
         response.status = sinon.stub().returns(response);
         response.json = sinon.stub();
-
         sinon.stub(productsService, 'getAllProducts').resolves(products);
-
         await productsControllers.getAllProducts(request, response);
-
         expect(response.status.calledWith(200)).to.be.equal(true);
       });
     });
-
-    // describe('Failure case', () => {
-    //   beforeEach(() => {
-    //     sinon.restore();
-    //   });
-
-    //   it('Será validado que é retornado status 404', async () => {
-
-    //     const products = [[]];
-
-    //     const request = {};
-    //     const response = {};
-
-    //     response.status = sinon.stub().returns(response);
-    //     response.json = sinon.stub();
-
-    //     sinon.stub(productsService, 'getAllProducts').resolves(products);
-    //     await productsControllers.getAllProducts(request, response);
-    //     expect(response.status.calledWith(404)).to.be.equal(true);
-    //   });
-    // });
   });
   describe('Returns a product found by id in the database', () => {
     describe('Success case', () => {
@@ -125,7 +95,7 @@ describe('Products Controllers:', () => {
       });
     });
 
-    describe("Register a product", () => {
+    describe('Register a product', () => {
       beforeEach(() => {
         sinon.restore();
       });
@@ -134,78 +104,44 @@ describe('Products Controllers:', () => {
       const newProduct = [
         {
           id: 1,
-          name: "Bala da Xuxa",
+          name: 'Bala da Xuxa',
         },
       ];
       request.body = {};
       response.status = sinon.stub().returns(response);
       response.json = sinon.stub().returns();
 
-      it("Returns the status code 201", async () => {
-        sinon.stub(productsService, "addProduct").resolves(newProduct);
+      it('Returns the status code 201', async () => {
+        sinon.stub(productsService, 'addProduct').resolves(newProduct);
         await productsControllers.addProduct(request, response);
         expect(response.status.calledWith(201)).to.be.equal(true);
       });
 
-      it("Returns the product created", async () => {
-        sinon.stub(productsService, "addProduct").resolves(newProduct);
+      it('Returns the product created', async () => {
+        sinon.stub(productsService, 'addProduct').resolves(newProduct);
         await productsControllers.addProduct(request, response);
         expect(response.json.calledWith(newProduct)).to.be.equal(true);
       });
     });
   });
-  // describe('Delete a product', () => {
-  //   describe('Success case', () => {
-  //     beforeEach(() => {
-  //       sinon.restore();
-  //     });
-  //     it('A product can be deleted by its id', async () => {
-  //       const request = {};
-  //       const response = {};
-  //       request.body = {};
-  //       request.params = { id: 1 };
-  //       response.status = sinon.stub().returns(response);
-  //       response.end = sinon.stub().returns();
+  describe('Delete a product', () => {
+    describe('Success case', () => {
+      beforeEach(() => {
+        sinon.restore();
+      });
+      const request = {};
+      const response = {};
+      request.body = {};
+      request.params = { id: 1 };
+      response.status = sinon.stub().returns(response);
+      response.end = sinon.stub().returns();
 
-  //       sinon.stub(productsService, 'deleteProduct').resolves(undefined);
+      it('A product can be deleted by its id', async () => {
+        sinon.stub(productsService, 'deleteProduct').resolves(undefined);
 
-  //       await productsControllers.deleteProduct(request, response);
-  //       expect(response.status.calledWith(204)).to.be.equal(true);
-  //     });
-  //     describe('Failure case', async () => {
-  //       beforeEach(() => {
-  //         sinon.restore();
-  //       });
-
-  //       it('Returns the status 404', async () => {
-  //         const request = {};
-  //         const response = {};
-  //         const error =  null;
-
-  //         request.body = {};
-  //         request.params = { id: 0 };
-  //         response.status = sinon.stub().returns(response);
-  //         response.json = sinon.stub().returns();
-  //         sinon.stub(productsService, 'deleteProduct').resolves(error);
-
-  //         await productsControllers.deleteProduct(request, response);
-  //         expect(response.status.calledWith(404)).to.be.equal(true);
-  //       });
-
-  //       it('Returns the message: 'Product not found'', async () => {
-  //         const request = {};
-  //         const response = {};
-  //         const error = 'null';
-
-  //         request.body = {};
-  //         request.params = { id: 0 };
-  //         response.status = sinon.stub().returns(response);
-  //         response.json = sinon.stub().returns();
-  //         sinon.stub(productsService, 'deleteProduct').resolves(error);
-  //         await productsControllers.deleteProduct(request, response);
-  //         expect(response.json.calledWith({ message: 'Product not found' })).to.be.equal(true);
-  //       });
-  //     });
-  //   });
-  // });
+        await productsControllers.deleteProduct(request, response);
+        expect(response.status.calledWith(204)).to.be.equal(true);
+      });
+    });
+  });
 });

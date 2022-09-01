@@ -5,7 +5,7 @@ const getAllProducts = async (_req, res) => {
 
   if (!products) return res.status(404).send({ message: 'Product not found' });
 
-  res.status(200).json(products);
+  return res.status(200).json(products);
 };
 
 const getProductById = async (req, res) => {
@@ -15,7 +15,7 @@ const getProductById = async (req, res) => {
 
   if (!productById) { return res.status(404).send({ message: 'Product not found' }); }
 
-  res.status(200).json(productById);
+   return res.status(200).json(productById);
 };
 
 const addProduct = async (req, res) => {
@@ -25,7 +25,7 @@ const addProduct = async (req, res) => {
 
   if (!product) return res.status(404).send({ message: 'Product not found' });
 
-  res.status(201).json(product);
+  return res.status(201).json(product);
 };
 
 // Update product
@@ -38,11 +38,19 @@ const addProduct = async (req, res) => {
 
 //   if (!checkProduct) res.status(404).json({ message: 'Product not found' });
 
-//   const productAltered = await productsService.updateProduct(id, name);
+//   const productAltered = await productsService.updateProduct(name, id);
 
 //   // console.log(productAltered)
-//   res.status(201).json(productAltered);
+//   return res.status(201).json(productAltered);
 // };
+
+const getProductByNameSearch = async (req, res) => {
+  const { q: nameSearch } = req.query;
+
+  const productsList = await productsServices.getProductByNameSearch(nameSearch);
+
+  return res.status(200).json(productsList);
+};
 
 const deleteProduct = async (req, res) => {
   const { id } = req.params;
@@ -53,7 +61,7 @@ const deleteProduct = async (req, res) => {
 
    await productsServices.deleteProduct(id);
 
-  res.status(204).end();
+   return res.status(204).end();
 };
 
 module.exports = {
@@ -61,5 +69,6 @@ module.exports = {
   getProductById,
   addProduct,
   // updateProduct,
+  getProductByNameSearch,
   deleteProduct,
 };

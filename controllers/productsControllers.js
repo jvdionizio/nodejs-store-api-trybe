@@ -1,9 +1,11 @@
 const productsServices = require('../services/productsServices');
 
+const notFoundMessage = { message: 'Product not found' };
+
 const getAllProducts = async (_req, res) => {
   const products = await productsServices.getAllProducts();
 
-  if (!products) return res.status(404).send({ message: 'Product not found' });
+  if (!products) return res.status(404).send(notFoundMessage);
 
   return res.status(200).json(products);
 };
@@ -13,7 +15,7 @@ const getProductById = async (req, res) => {
 
   const productById = await productsServices.getProductById(id);
 
-  if (!productById) { return res.status(404).send({ message: 'Product not found' }); }
+  if (!productById) { return res.status(404).send(notFoundMessage); }
 
    return res.status(200).json(productById);
 };
@@ -23,26 +25,21 @@ const addProduct = async (req, res) => {
 
   const product = await productsServices.addProduct(name);
 
-  if (!product) return res.status(404).send({ message: 'Product not found' });
+  if (!product) return res.status(404).send(notFoundMessage);
 
   return res.status(201).json(product);
 };
 
-// Update product
+const updateProduct = async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
 
-// const updateProduct = async (req, res) => {
-//   const { id } = req.params;
-//   const { name } = req.body;
+  const update = await productsServices.updateProduct(name, id);
 
-//   const checkProduct = await productsService.getProductById(id);
+  if (update === null) return res.status(404).json(notFoundMessage);
 
-//   if (!checkProduct) res.status(404).json({ message: 'Product not found' });
-
-//   const productAltered = await productsService.updateProduct(name, id);
-
-//   // console.log(productAltered)
-//   return res.status(201).json(productAltered);
-// };
+  return res.status(200).json(update);
+};
 
 const getProductByNameSearch = async (req, res) => {
   const { q: nameSearch } = req.query;
@@ -57,7 +54,7 @@ const deleteProduct = async (req, res) => {
 
   const productById = await productsServices.getProductById(id);
 
-  if (!productById) return res.status(404).send({ message: 'Product not found' });
+  if (!productById) return res.status(404).send(notFoundMessage);
 
    await productsServices.deleteProduct(id);
 
@@ -68,7 +65,7 @@ module.exports = {
   getAllProducts,
   getProductById,
   addProduct,
-  // updateProduct,
+  updateProduct,
   getProductByNameSearch,
   deleteProduct,
 };

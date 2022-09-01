@@ -22,13 +22,11 @@ const addProduct = async (name) => {
   return { id: product.insertId, name };
 };
 
-// const updateProduct = async (name, id) => {
-//   const SQL = 'UPDATE StoreManager.products SET name = ? WHERE id = ?;';
-
-// const updateProduct = await connection.execute(SQL, [name, id]);
-
-//   return updateProduct;
-// };
+const updateProduct = async (name, id) => {
+  const SQL = 'UPDATE StoreManager.products SET name = (?) WHERE id = (?) LIMIT 1';
+  await connection.execute(SQL, [name, id]);
+  return { id, name };
+};
 
 const getProductByNameSearch = async (nameSearch) => {
   const SQL = 'SELECT * FROM StoreManager.products WHERE name LIKE ?;';
@@ -50,7 +48,7 @@ module.exports = {
   getAllProducts,
   getProductById,
   addProduct,
-  // updateProduct,
+  updateProduct,
   getProductByNameSearch,
   deleteProduct,
 };

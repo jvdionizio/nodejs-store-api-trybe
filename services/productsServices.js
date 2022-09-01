@@ -15,10 +15,13 @@ const addProduct = async (name) => {
   return product;
 };
 
-// const updateProduct = async (id, name) => {
-//   const product = productsModel.updateProduct(id, name );
-//   return product;
-// };
+const updateProduct = async (name, id) => {
+  const checkedId = await productsModel.getProductById(id);
+  if (!checkedId) return null;
+
+  const result = await productsModel.updateProduct(name, id);
+  return result;
+};
 
 const getProductByNameSearch = async (nameSearch) => {
   const productList = await productsModel.getProductByNameSearch(nameSearch);
@@ -35,7 +38,7 @@ module.exports = {
   getAllProducts,
   getProductById,
   addProduct,
-  // updateProduct,
+  updateProduct,
   getProductByNameSearch,
   deleteProduct,
 };

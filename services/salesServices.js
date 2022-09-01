@@ -10,6 +10,21 @@ const getSaleById = async (id) => {
   return result;
 };
 
+const addSale = async (sales) => {
+  const createId = await salesModels.addSale();
+
+  const newSalesObj = {
+    id: createId,
+    itemsSold: sales,
+  };
+
+  await Promise.all(
+    sales.map(({ productId, quantity }) =>
+      salesModels.addSaleProduct(createId, productId, quantity)),
+  );
+  return newSalesObj;
+};
+
 const deleteSale = async (id) => {
   const result = await salesModels.deleteSale(id);
 
@@ -19,5 +34,6 @@ const deleteSale = async (id) => {
 module.exports = {
   getAllSales,
   getSaleById,
+  addSale,
   deleteSale,
 };
